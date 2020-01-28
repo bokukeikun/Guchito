@@ -6,53 +6,73 @@ session_start();
 
 
 if (!empty($_POST)) {
-if ($_POST['name'] == '') {
-    $error['name'] = 'blank';
-}
-if ($_POST['email'] == '') {
-    $error['email'] = 'blank';
-}
-if (strlen($_POST['password']) < 4) {
-    $error['password'] = 'length';
-}
-if ($_POST['password'] == '') {
-    $error['password'] = 'blank';
-} 
-$fileName = $_FILES['image']['name'];
-if (!empty($fileName)) {
-    $ext = substr($fileName, -4);
-    if ($ext != '.jpg' && $ext != '.gif' && $ext != 'jpeg' && $ext != 'heic' && $ext != '.png') {
-        $error['image'] = 'type';
+    if ($_POST['name'] == '') {
+        $error['name'] = 'blank';
     }
-}
-
-//重複アカウントチェック
-if (empty($error)) {
-    $member = $db->prepare('SELECT COUNT(*) AS cnt FROM members WHERE email=? ');
-    $member->execute(array($_POST['email']));
-    $record = $member->fetch();
-    if ($record['cnt'] > 0) {
-        $error['email'] = 'duplicate';
+    if ($_POST['email'] == '') {
+        $error['email'] = 'blank';
     }
+    if (strlen($_POST['password']) < 4) {
+        $error['password'] = 'length';
+    }
+    if ($_POST['password'] == '') {
+        $error['password'] = 'blank';
+    } 
+    $fileName = $_FILES['image']['name'];
+    if (!empty($fileName)) {
+        $ext = substr($fileName, -4);
+        if ($ext != '.jpg' && $ext != '.gif' && $ext != 'jpeg' && $ext != 'heic' && $ext != '.png') {
+            $error['image'] = 'type';
+        }
+    }
+
+    //重複アカウントチェック
+    if (empty($error)) {
+        $member = $db->prepare('SELECT COUNT(*) AS cnt FROM members WHERE email=? ');
+        $member->execute(array($_POST['email']));
+        $record = $member->fetch();
+        if ($record['cnt'] > 0) {
+            $error['email'] = 'duplicate';
+        }
+
+        //google API
+
+        if (isset($_POST['recaptchaResponse']) && !empty($_POST['recaptchaResponse'])) {
+            $secret = '6Ldbi9MUAAAAAF8eXoLDESHRe2x6C5Rtnym7LOTU';
+            $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['recaptchaResponse']);
+            $reCAPTCHA = json_decode($verifyResponse);
+            if ($reCAPTCHA->success) {
+                // たぶん人間
+            } else {
+                echo "あなたはbotと判断されました。";
+                  return;
+            }
+        }
+
+        if (empty($error)) {
+            //画像をアップロードする
+            $image = date('YmdHis') . $_FILES['image']['name'];
+            move_uploaded_file($_FILES['image']['tmp_name'], '../member_picture/'.$image);
+    
+            $_SESSION['join'] = $_POST;
+            $_SESSION['join']['image'] = $image;
+            header('Location: check.php');
+            exit();
+        }
+    }
+
+
 }
 
-if (empty($error)) {
-    //画像をアップロードする
-    $image = date('YmdHis') . $_FILES['image']['name'];
-    move_uploaded_file($_FILES['image']['tmp_name'], '../member_picture/'.$image);
-
-    $_SESSION['join'] = $_POST;
-    $_SESSION['join']['image'] = $image;
-    header('Location: check.php');
-    exit();
-}
-
-}
 
 if ($_REQUEST['action'] == 'rewrite') {
     $_POST = $_SESSION['join'];
     $error['rewrite'] = true;
 }
+
+
+
+
 ?>
 
 
@@ -64,6 +84,15 @@ if ($_REQUEST['action'] == 'rewrite') {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../style.css">
     <title>Guchito</title>
+    <script src="https://www.google.com/recaptcha/api.js?render=6Ldbi9MUAAAAAACTJamCtskPFR5b0OUXeqfgbL8l"></script>
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6Ldbi9MUAAAAAACTJamCtskPFR5b0OUXeqfgbL8l', {action: 'homepage'}).then(function(token) {
+        var recaptchaResponse = document.getElementById('recaptchaResponse');
+            recaptchaResponse.value = token;
+            });
+        });
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 </head>
@@ -160,6 +189,11 @@ if ($_REQUEST['action'] == 'rewrite') {
                             <?php endif;?>
                         </td>
                     </tr>
+                    <tr>
+                        <div class="g-recaptcha">
+                            <input type="hidden" name="recaptchaResponse" id="recaptchaResponse" />
+                        </div>
+                    </tr>
                 </table>
                 <div><input class="btn confirm" type="submit" value="入力内容を確認する"></div>
             </form>
@@ -179,6 +213,7 @@ if ($_REQUEST['action'] == 'rewrite') {
             });
 
         });
+
     </script>
 </body>
 </html>
