@@ -112,7 +112,7 @@ if ($_REQUEST['action'] == 'rewrite') {
             <div id="nav-content">
                 <div class="menu hamburger-top"></div>
                 <ul class="flex category">
-                    <li class="category-title"><a class="nav-btn" href="home.html">ホーム</a></li>
+                    <li class="category-title"><a class="nav-btn" href="../home.html">ホーム</a></li>
                     <li class="category-title"><a class="nav-btn" href="../login.php">ログイン</a></li>
                     <li class="category-title"><a class="nav-btn" href="index.php">メンバー登録</a></li>
                 </ul>
@@ -178,7 +178,7 @@ if ($_REQUEST['action'] == 'rewrite') {
                     </tr>
                     <tr>
                         <td>
-                        <p>
+                        <p class="file_image">
                             <input type="file" name="image" size="35">
                         </p>
                         <?php if($error['image'] == 'type'): ?>

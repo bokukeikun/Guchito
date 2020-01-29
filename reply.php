@@ -33,7 +33,7 @@ if (isset($_REQUEST['res'])) {
     $response->execute(array($_REQUEST['res']));
 
     $table = $response->fetch();
-    $message = '@' . $table['name'] . '  ' . $table['message']. '->  ';
+    $message =  $table['message'] . '  (' .'@' . $table['name'] . ')';
 }
 
 //htmlspecialcharsのショートカット
@@ -86,7 +86,7 @@ if ($post = $posts->fetch()) :
                 <div class="menu hamburger-top"></div>
                 <ul class="flex category">
                     <!-- <li class="category-title"><a class="nav-btn" href="home.html">ホーム</a></li> -->
-                    <li class="category-title"><a class="nav-btn" href="login.php">ログイン</a></li>
+                    <li class="category-title"><a class="nav-btn" href="home.html">ホーム</a></li>
                     <li class="category-title"><a class="nav-btn" href="join/index.php">メンバー登録</a></li>
                     <li class="category-title"><a class="nav-btn" href="logout.php">ログアウト</a></li>
                 </ul>
@@ -173,7 +173,7 @@ if ($post = $posts->fetch()) :
                 </div>
                 <div class="comment">
                     <p>ぐち内容：　</p>
-                    <textarea name="message" cols="30" rows="4" wrap="hard" maxlength="200" required><?php echo h($message); ?></textarea>
+                    <textarea name="message" cols="50" rows="4" wrap="hard" maxlength="400" required><?php echo h($message)."\n"."\n"."->"; ?></textarea>
                     <input type="hidden" name="reply_id" value="<?php echo h($_REQUEST['res']); ?>">
                 </div>
                 <div class="submit">

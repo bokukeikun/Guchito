@@ -13,7 +13,7 @@ if (isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()) {
     $member = $members->fetch();
 }else {
     //ログインしていない
-    header('Location: login.php');
+    header('Location: home.html');
     exit();
 }
 
@@ -118,7 +118,7 @@ function makeLink($value) {
                 <div class="menu hamburger-top"></div>
                 <ul class="flex category">
                     <!-- <li class="category-title"><a class="nav-btn" href="home.html">ホーム</a></li> -->
-                    <li class="category-title"><a class="nav-btn" href="login.php">ログイン</a></li>
+                    <li class="category-title"><a class="nav-btn" href="home.html">ホーム</a></li>
                     <li class="category-title"><a class="nav-btn" href="join/index.php">メンバー登録</a></li>
                     <li class="category-title"><a class="nav-btn" href="logout.php">ログアウト</a></li>
                 </ul>
@@ -126,7 +126,7 @@ function makeLink($value) {
         </div>
     </header>
 
-    <div class="container">
+    <div class="index_container">
         <div class="main">
             <div class="main-header">
                 <h2>ルールを守って、<br class="sp_br" >たまってるストレスを発散させよう！！</h2>
@@ -166,7 +166,6 @@ function makeLink($value) {
                         <h4>カテゴリー：<?php echo (h($post['category']))?></h4>
                     </div>
                     <div class="message">
-                        <h4>ぐち内容</h4>
                         <p><?php echo nl2br(makeLink(h($post['message'])));?></p>
                     </div>
                 </div>
@@ -211,7 +210,7 @@ function makeLink($value) {
                 </div>
                 <div class="comment">
                     <p>ぐち内容：　</p>
-                    <textarea name="message" cols="30" rows="4" wrap="hard" maxlength="200" required><?php echo h($message); ?></textarea>
+                    <textarea name="message" cols="50" rows="4" wrap="hard" maxlength="400" required><?php echo h($message); ?></textarea>
                     <input type="hidden" name="reply_id" value="<?php echo h($_REQUEST['res']); ?>">
                 </div>
                 <div class="submit">
