@@ -695,7 +695,7 @@ footer form {
 
     /* index.php */
     .msg {
-        width: 90%;
+        width: 80%;
         margin: 6% auto 0;
     }
 
@@ -1030,15 +1030,16 @@ footer form {
         display: none;
     }
 
-    .msg {
-        width: 80%;
-    }
-
-
+    
+    
 }
 
 @media screen and (max-width: 480px) {
     
+    .msg {
+        width: 90%;
+    }
+
     .msg-header-content a {
         font-size: 10px;
     }

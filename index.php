@@ -62,7 +62,7 @@ $start = ($page - 1) * 10;
 $posts = $db->prepare('SELECT m.name, m.picture, p.* FROM members m, posts p WHERE m.id=p.member_id ORDER BY p.created DESC LIMIT ?, 10');
 $posts->bindParam(1, $start, PDO::PARAM_INT);
 $posts->execute();
-
+    
 //返信の場合
 if (isset($_REQUEST['res'])) {
     $response = $db->prepare('SELECT m.name, m.picture, p.* FROM members m,posts p WHERE m.id=p.member_id AND p.id=? ORDER BY p.created DESC');
@@ -134,7 +134,14 @@ function makeLink($value) {
             <div id="content">
             </div>
             <?php foreach ($posts as $post):?>
-        
+            
+            <?php
+            $day = new DateTime();
+            $createdDay = new DateTime($post['created']);
+            $createdDay->add(new DateInterval('P7D'));
+            
+            if ( $createdDay->format('Y-m-d') > $day->format('Y-m-d')) :
+            ?>
             <div class="msg">
                 <div class="msg-header">
                     <div class="icon">
@@ -170,6 +177,12 @@ function makeLink($value) {
                     </div>
                 </div>
             </div>
+            <?php else:?>
+            <?php
+            $del = $db->prepare('DELETE FROM posts WHERE id=? ');
+            $del->execute(array($post['id']));
+            ?>
+            <?php endif ?>
             <?php endforeach; ?>
             
         </div>
@@ -202,6 +215,7 @@ function makeLink($value) {
                     <input type="text" height="20px" name="title" maxlength="10">
                     <p>カテゴリー：　</p>
                     <select name="category" id="">
+                        <option value="なし">なし</option>
                         <option value="会社">会社</option>
                         <option value="恋愛">恋愛</option>
                         <option value="学校">学校</option>
