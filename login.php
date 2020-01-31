@@ -82,15 +82,15 @@ if (!empty($_POST)) {
         <div class="main">
             <div id="lead" class="lead">
                 <h1>ログイン画面</h1>
-                <p>メールアドレスとパスワードを<br class="sp_br" >記入してログインしてください</p>
+                <p>ログインIDとパスワードを<br class="sp_br" >記入してログインしてください</p>
             </div>
             <form action="" method="post">
                 <table>
                     <tr>
-                    <th>メールアドレス：</th>
+                    <th>ログインID：</th>
                         <td><input type="text" name="email" size="35" maxlength="255" value="<?php echo htmlspecialchars($_POST['email'], ENT_QUOTES); ?>"></td>
                         <?php if ($error['login'] == 'blank'): ?>
-                        <p class="error">* メールアドレスとパスワードを記入してください。</p>
+                        <p class="error">* ログインIDとパスワードを記入してください。</p>
                         <?php endif ?>
                         <?php if ($error['login'] == 'failed') :?>
                         <p class="error">* ログインに失敗しました。正しく記入してください。</p>

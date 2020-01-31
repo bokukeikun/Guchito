@@ -5,7 +5,6 @@ $password = "hand0221";
 
 try {
     $db = new PDO($dbname, $username, $password);
-    echo $username;
 } catch (PDOException $e) {
     echo 'DB接続エラー: '. $e->getMessage();
 }

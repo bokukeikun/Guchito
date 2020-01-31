@@ -70,7 +70,7 @@ if ($post = $posts->fetch()) :
     <header>
         <div class="inner flex">
             <div class="logo">
-                <a href="home.html">Guchito</a>
+                <a class="textshadow" href="home.html">Guchito</a>
             </div>
             
             <div id="submit-open">
@@ -177,7 +177,7 @@ if ($post = $posts->fetch()) :
                     <input type="hidden" name="reply_id" value="<?php echo h($_REQUEST['res']); ?>">
                 </div>
                 <div class="submit">
-                    <input class="submit_btn" type="submit" value="投稿する" >
+                    <input class="submit_btn" type="submit" value="ぐちる" >
                 </div>
             </div>
         </form>

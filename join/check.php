@@ -39,7 +39,7 @@ if (!empty($_POST)) {
     <header>
         <div class="inner flex">
             <div class="logo">
-                <a href="../home.html">Guchito</a>
+                <a class="textshadow" href="../home.html">Guchito</a>
             </div>
 
             <div id="nav-open">
@@ -74,7 +74,7 @@ if (!empty($_POST)) {
                         </td>
                     </tr>
                     <tr>
-                        <th>メールアドレス：</th>
+                        <th>ログインID：</th>
                         <td>
                         <?php echo htmlspecialchars($_SESSION['join']['email'], ENT_QUOTES); ?>
                         </td>

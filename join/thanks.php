@@ -16,7 +16,7 @@
     <header>
         <div class="inner flex">
             <div class="logo">
-                <a href="../home.html">Guchito</a>
+                <a class="textshadow" href="../home.html">Guchito</a>
             </div>
 
             <div id="nav-open">

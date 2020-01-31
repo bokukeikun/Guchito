@@ -102,7 +102,7 @@ function makeLink($value) {
     <header>
         <div class="inner flex">
             <div class="logo">
-                <a href="home.html">Guchito</a>
+                <a class="textshadow" href="home.html">Guchito</a>
             </div>
             
             <div id="submit-open">
@@ -153,11 +153,11 @@ function makeLink($value) {
                                 <?php echo h($post['created']); ?>
                             <!-- </a> -->
                         </p>
-                        <!-- <p>
-                            <?//php if ($post['reply_id'] > 0):?>
-                            <a href="view.php?id=<?php // echo h($post['reply_id']); ?>">[返信元]</a>
-                            <?php //endif; ?>
-                        </p> -->
+                        <p>
+                            <?php if ($post['reply_id'] > 0):?>
+                            <a href="view.php?id=<?php echo h($post['reply_id']); ?>">[返信元]</a>
+                            <?php endif; ?>
+                        </p>
                     </div>
                 </div>
                 <div class="msg-content">
@@ -214,7 +214,7 @@ function makeLink($value) {
                     <input type="hidden" name="reply_id" value="<?php echo h($_REQUEST['res']); ?>">
                 </div>
                 <div class="submit">
-                    <input class="submit_btn" type="submit" value="投稿する" >
+                    <input class="submit_btn" type="submit" value="ぐちる" >
                 </div>
             </div>
         </form>

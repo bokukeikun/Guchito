@@ -101,7 +101,7 @@ if ($_REQUEST['action'] == 'rewrite') {
     <header>
         <div class="inner flex">
             <div class="logo">
-                <a href="../home.html">Guchito</a>
+                <a class="textshadow" href="../home.html">Guchito</a>
             </div>
 
             <div id="nav-open">
@@ -145,16 +145,16 @@ if ($_REQUEST['action'] == 'rewrite') {
                         </td>
                     </tr>
                     <tr>
-                        <th>メールアドレス：<span class="required">必須</span></th>
+                        <th>ログインID：<span class="required">必須</span></th>
                     </tr>
                     <tr>
                         <td>
                             <input type="text" name="email" maxlength="255" value="<?php echo htmlspecialchars($_POST['email'], ENT_QUOTES) ?>">
                             <?php if($error['email'] == 'blank'): ?>
-                            <p class="error">*メールアドレスを入力してください</p>
+                            <p class="error">*ログインIDを入力してください</p>
                             <?php endif; ?>
                             <?php if ($error['email'] == 'duplicate'): ?>
-                            <p class="error">*指定されたメールアドレスは既に登録されています</p>
+                            <p class="error">*指定されたログインIDは既に登録されています</p>
                             <?php endif ;?>
                         </td>
                     </tr>
